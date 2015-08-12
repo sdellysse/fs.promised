@@ -1,0 +1,10 @@
+{
+  "name": "fs-promised-agnostic",
+  "version": "1.0.0",
+  "description": "Promise-implementation-agnostic wrapper for fs",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC"
+}
