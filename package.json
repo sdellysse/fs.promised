@@ -5,6 +5,14 @@
   "main": "index.js",
   "scripts": {
   },
-  "author": "",
+  "author": {
+    "name": "Shawn Dellysse",
+    "email": "sdellysse@gmail.com",
+    "url": "http://shawndellysse.com"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/shawndellysse/fs-promised-agnostic.git"
+  },
   "license": "ISC"
 }
