@@ -85,7 +85,7 @@ module.exports = {
     readdirSync: fs.readdirSync,
 
     close: promisify(fs.close),
-    closeSync: fs.closeSync
+    closeSync: fs.closeSync,
 
     open: promisify(fs.open),
     openSync: fs.openSync,
