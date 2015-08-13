@@ -24,104 +24,104 @@ var promisfy = require("./promisfy");
 
 
 module.exports = {
-    rename: promisify(fs.rename),
+    rename: promisfy(fs.rename),
     renameSync: fs.readSync,
 
-    ftruncate: promisify(fs.ftruncate),
+    ftruncate: promisfy(fs.ftruncate),
     ftruncateSync: fs.ftruncateSync,
 
-    truncate: promisify(fs.truncate),
+    truncate: promisfy(fs.truncate),
     truncateSync: fs.truncateSync,
 
-    chown: promisify(fs.chown),
+    chown: promisfy(fs.chown),
     chownSync: fs.chownSync,
 
-    fchown: promisify(fs.fchown),
+    fchown: promisfy(fs.fchown),
     fchownSync: fs.fchownSync,
 
-    lchown: promisify(fs.lchown),
+    lchown: promisfy(fs.lchown),
     lchownSync: fs.lchownSync,
 
-    chmod: promisify(fs.chmod),
+    chmod: promisfy(fs.chmod),
     chmodSync: fs.chmodSync,
 
-    fchmod: promisify(fs.fchmod),
+    fchmod: promisfy(fs.fchmod),
     fchmodSync: fs.fchmodSync,
 
-    lchmod: promisify(fs.lchmod),
+    lchmod: promisfy(fs.lchmod),
     lchmodSync: fs.lchmodSync,
 
-    stat: promisify(fs.stat),
+    stat: promisfy(fs.stat),
     statSync: fs.statSync,
 
-    lstat: promisify(fs.lstat),
+    lstat: promisfy(fs.lstat),
     lstatSync: fs.lstatSync,
 
-    fstat: promisify(fs.fstat),
+    fstat: promisfy(fs.fstat),
     fstatSync: fs.fstatSync,
 
-    link: promisify(fs.link),
+    link: promisfy(fs.link),
     linkSync: fs.linkSync,
 
-    symlink: promisify(fs.symlink),
+    symlink: promisfy(fs.symlink),
     symlinkSync: fs.symlinkSync,
 
-    readlink: promisify(fs.readlink),
+    readlink: promisfy(fs.readlink),
     readlinkSync: fs.readlinkSync,
 
-    realpath: promisify(fs.realpath),
+    realpath: promisfy(fs.realpath),
     realpathSync: fs.realpathSync,
 
-    unlink: promisify(fs.unlink),
+    unlink: promisfy(fs.unlink),
     unlinkSync: fs.unlinkSync,
 
-    rmdir: promisify(fs.rmdir),
+    rmdir: promisfy(fs.rmdir),
     rmdirSync: fs.rmdirSync,
 
-    mkdir: promisify(fs.mkdir),
+    mkdir: promisfy(fs.mkdir),
     mkdirSync: fs.mkdirSync,
 
-    readdir: promisify(fs.readdir),
+    readdir: promisfy(fs.readdir),
     readdirSync: fs.readdirSync,
 
-    close: promisify(fs.close),
+    close: promisfy(fs.close),
     closeSync: fs.closeSync,
 
-    open: promisify(fs.open),
+    open: promisfy(fs.open),
     openSync: fs.openSync,
 
-    utimes: promisify(fs.utimes),
+    utimes: promisfy(fs.utimes),
     utimesSync: fs.utimesSync,
 
-    futimes: promisify(fs.futimes),
-    futimesSync, fs.futimesSync,
+    futimes: promisfy(fs.futimes),
+    futimesSync: fs.futimesSync,
 
-    fsync: promisify(fs.fsync),
+    fsync: promisfy(fs.fsync),
     fsyncSync: fs.fsyncSync,
 
-    write: promisify(fs.write),
+    write: promisfy(fs.write),
     writeSync: fs.writeSync,
 
-    read: promisify(fs.read),
+    read: promisfy(fs.read),
     readSync: fs.readSync,
 
-    readFile: promisify(fs.readFile),
+    readFile: promisfy(fs.readFile),
     readFileSync: fs.readFileSync,
 
-    writeFile: promisify(fs.writeFile),
+    writeFile: promisfy(fs.writeFile),
     writeFileSync: fs.writeFileSync,
 
-    appendFile: promisify(fs.appendFile),
+    appendFile: promisfy(fs.appendFile),
     appendFileSync: fs.appendFileSync,
 
     watchFile: fs.watchFile,
     unwatchFile: fs.unwatchFile,
     watch: fs.watch,
 
-    exists: promisify(fs.exists),
+    exists: promisfy(fs.exists),
     existsSync: fs.existsSync,
 
-    access: promisify(fs.access),
+    access: promisfy(fs.access),
     accessSync: fs.accessSync,
 
     Stats: fs.Stats,
