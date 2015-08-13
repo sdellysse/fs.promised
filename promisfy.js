@@ -16,6 +16,10 @@
 "use strict";
 
 var promisify = function (func) {
+    if (typeof cbArgNames === "undefined") {
+        cbArgNames = null;
+    }
+
     return function () {
         var self = this;
         var funcArgs = Array.prototype.slice.call(arguments);
@@ -28,12 +32,15 @@ var promisify = function (func) {
                 if (error) {
                     reject(error);
                 } else {
-                    resolve.apply(null, args);
+                    if (args.length > 1) {
+                        resolve(args);
+                    } else {
+                        resolve(args[0]);
+                    }
                 }
             };
 
             var args = funcArgs.concat([cb]);
-
             try {
                 func.apply(self, args);
             } catch (exception) {

@@ -7,75 +7,25 @@ landed in ES2015. This library intends to be a drop-in replacement for the
 built-in fs module, where all the async functions now use Promises instead of
 callbacks. Any other functions on the fs module are passed through untouched.
 
-*NOTE:* If you are using an older version of node, you need to polyfill the
-global Promise constructor.
+## Notes ##
+* All the examples in this README will be using ES2015/ESnext. The library is
+  written in ES5, Promises are just so much easier to work with in ES2015+.
+
+* If you are using an older version of node, you need to polyfill the global
+  Promise constructor.
+
+  ```javascript
+  global.Promise = require("bluebird");
+  var fs = require("fs-promised-agnostic");
+  ```
+
+## Usage ##
 
 ```javascript
-global.Promise = require("bluebird");
-var fs = require("fs-promised-agnostic");
-```
-
-
-### Comparisons between different way of asynchronous programming in Javascript ###
-
-Callback-based (pyramid of doom):
-
-```javascript
-var fs = require("fs");
-
-function doSomething () {
-    return new Promise(function (resolve, reject) {
-        fs.mkdir("/tmp/fs", function (error) {
-            if (error) {
-                reject(error);
-                return;
-            }
-
-            fs.writeFile("/tmp/fs/test", "blah blah blah", function (error) {
-                if (error) {
-                    reject(error);
-                    return;
-                }
-
-                fs.unlink("/tmp/fs/test", function (error) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve();
-                    }
-                });
-            });
-        });
-    });
-}
-```
-
-
-Promise-based (no more pyramid of doom):
-
-```javascript
-var fs = require("fs-promised-agnostic");
-
-function doSomething () {
-    return new Promise(function (resolve, reject) {
-        fs.mkdir("/tmp/fs")
-        .then(function () { return fs.writeFile("/tmp/fs/test", "blah blah blah"); })
-        .then(function () { return fs.unlink("/tmp/fs/test"); })
-        .then(
-            function () { resolve(); },
-            function (error) { reject(error); }
-        );
-    });
-}
-
-```
-
-ES2015 Arrow Functions used with Promises:
-
-```javascript
+/* ES2015 */
 const fs = require("fs-promised-agnostic");
 
-function doSomething () {
+const doSomething = function () {
     return new Promise((resolve, reject) => {
         fs.mkdir("/tmp/fs")
         .then(() => fs.mkdir("/tmp/fs"))
@@ -88,17 +38,37 @@ function doSomething () {
     });
 }
 
-```
-
-Async/Await from ESnext (using Babel or similar):
-
-```javascript
+/* ESnext */
 const fs = require("fs-promised-agnostic");
 
-async function doSomething () {
+const doSomething = async function () {
     await fs.mkdir("/tmp/fs");
     await fs.writeFile("/tmp/fs/test", "blah blah blah");
     await fs.unlink("/tmp/fs/test");
 }
-
 ```
+
+### Caveats ###
+
+* Exceptions:
+    If the wrapped function throws an exception, the promise will be rejected
+    with a value of `{ exception: <exception> }`. This is so that you can
+    determine the difference between normal rejections and exceptions. This
+    shouldn't matter as async fs functions shouldn't throw exceptions.
+
+* Callbacks with multiple success values:
+    This should only affect `fs.write` and `fs.read`. Functions that give a
+    callback more than one success value (as in, values after the first "error"
+    value) will be resolved with an array. Example:
+
+    ```javascript
+    /* ES2015 */
+    fs.read(fd, data)
+    .then(([written, string]) => {
+        //...
+    });
+
+    /* ESnext */
+    let [written, string] = await fs.read(fd, data);
+    //...
+    ```
