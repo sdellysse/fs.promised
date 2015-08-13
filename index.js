@@ -22,112 +22,25 @@ if (typeof Promise === "undefined") {
 var fs = require("fs");
 var promisfy = require("./promisfy");
 
+var functionNames = [
+    "rename", "chown", "truncate", "ftruncate", "fchown", "lchown", "chmod",
+    "fchmod", "lchmod", "stat", "lstat", "fstat", "link", "symlink", "readlink",
+    "realpath", "unlink", "rmdir", "mkdir", "readdir", "close", "open",
+    "utimes", "futimes", "fsync", "write", "read", "readFile", "writeFile",
+    "appendFile", "exists", "access",
+];
 
-module.exports = {
-    rename: promisfy(fs.rename),
-    renameSync: fs.readSync,
+var functionNameLookup = {};
+for (var i = 0, l = functionNames.length; i < l; i++) {
+    var functionName = functionNames[i];
 
-    ftruncate: promisfy(fs.ftruncate),
-    ftruncateSync: fs.ftruncateSync,
+    functionNameLookup[functionName] = true;
+}
 
-    truncate: promisfy(fs.truncate),
-    truncateSync: fs.truncateSync,
-
-    chown: promisfy(fs.chown),
-    chownSync: fs.chownSync,
-
-    fchown: promisfy(fs.fchown),
-    fchownSync: fs.fchownSync,
-
-    lchown: promisfy(fs.lchown),
-    lchownSync: fs.lchownSync,
-
-    chmod: promisfy(fs.chmod),
-    chmodSync: fs.chmodSync,
-
-    fchmod: promisfy(fs.fchmod),
-    fchmodSync: fs.fchmodSync,
-
-    lchmod: promisfy(fs.lchmod),
-    lchmodSync: fs.lchmodSync,
-
-    stat: promisfy(fs.stat),
-    statSync: fs.statSync,
-
-    lstat: promisfy(fs.lstat),
-    lstatSync: fs.lstatSync,
-
-    fstat: promisfy(fs.fstat),
-    fstatSync: fs.fstatSync,
-
-    link: promisfy(fs.link),
-    linkSync: fs.linkSync,
-
-    symlink: promisfy(fs.symlink),
-    symlinkSync: fs.symlinkSync,
-
-    readlink: promisfy(fs.readlink),
-    readlinkSync: fs.readlinkSync,
-
-    realpath: promisfy(fs.realpath),
-    realpathSync: fs.realpathSync,
-
-    unlink: promisfy(fs.unlink),
-    unlinkSync: fs.unlinkSync,
-
-    rmdir: promisfy(fs.rmdir),
-    rmdirSync: fs.rmdirSync,
-
-    mkdir: promisfy(fs.mkdir),
-    mkdirSync: fs.mkdirSync,
-
-    readdir: promisfy(fs.readdir),
-    readdirSync: fs.readdirSync,
-
-    close: promisfy(fs.close),
-    closeSync: fs.closeSync,
-
-    open: promisfy(fs.open),
-    openSync: fs.openSync,
-
-    utimes: promisfy(fs.utimes),
-    utimesSync: fs.utimesSync,
-
-    futimes: promisfy(fs.futimes),
-    futimesSync: fs.futimesSync,
-
-    fsync: promisfy(fs.fsync),
-    fsyncSync: fs.fsyncSync,
-
-    write: promisfy(fs.write),
-    writeSync: fs.writeSync,
-
-    read: promisfy(fs.read),
-    readSync: fs.readSync,
-
-    readFile: promisfy(fs.readFile),
-    readFileSync: fs.readFileSync,
-
-    writeFile: promisfy(fs.writeFile),
-    writeFileSync: fs.writeFileSync,
-
-    appendFile: promisfy(fs.appendFile),
-    appendFileSync: fs.appendFileSync,
-
-    watchFile: fs.watchFile,
-    unwatchFile: fs.unwatchFile,
-    watch: fs.watch,
-
-    exists: promisfy(fs.exists),
-    existsSync: fs.existsSync,
-
-    access: promisfy(fs.access),
-    accessSync: fs.accessSync,
-
-    Stats: fs.Stats,
-    createReadStream: fs.createReadStream,
-    ReadStream: fs.ReadStream,
-    createWriteStream: fs.createWriteStream,
-    WriteStream: fs.WriteStream,
-    FSWatcher: fs.FSWatcher,
-};
+for (var name in fs) {
+    if (functionNameLookup[name]) {
+        exports[name] = promisfy(fs[name]);
+    } else {
+        exports[name] = fs[name];
+    }
+}
