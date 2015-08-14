@@ -16,14 +16,14 @@ callbacks. Any other functions on the fs module are passed through untouched.
 
   ```javascript
   global.Promise = require("bluebird");
-  var fs = require("fs-promised-agnostic");
+  var fs = require("fs.promised");
   ```
 
 ## Usage ##
 
 ```javascript
 /* ES2015 */
-const fs = require("fs-promised-agnostic");
+const fs = require("fs.promised");
 
 const doSomething = function () {
     return new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ const doSomething = function () {
 }
 
 /* ESnext */
-const fs = require("fs-promised-agnostic");
+const fs = require("fs.promised");
 
 const doSomething = async function () {
     await fs.mkdir("/tmp/fs");
