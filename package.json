@@ -1,6 +1,6 @@
 {
   "name": "fs.promised",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Promise-implementation-agnostic wrapper for fs",
   "main": "index.js",
   "scripts": {
