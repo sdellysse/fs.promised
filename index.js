@@ -27,7 +27,7 @@ var functionNames = [
     "fchmod", "lchmod", "stat", "lstat", "fstat", "link", "symlink", "readlink",
     "realpath", "unlink", "rmdir", "mkdir", "readdir", "close", "open",
     "utimes", "futimes", "fsync", "write", "read", "readFile", "writeFile",
-    "appendFile", "exists", "access",
+    "appendFile", "access",
 ];
 
 var functionNameLookup = {};
@@ -40,6 +40,14 @@ for (var i = 0, l = functionNames.length; i < l; i++) {
 for (var name in fs) {
     if (functionNameLookup[name]) {
         exports[name] = promisfy(fs[name]);
+
+    // exists is a depcreated oddball but it's still there
+    } else if (name === "exists") {
+        exports[name] = new Promise(function (resolve, reject) {
+            return function (pathname) {
+                fs.exists(pathname, resolve);
+            };
+        });
     } else {
         exports[name] = fs[name];
     }
