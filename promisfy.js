@@ -16,10 +16,6 @@
 "use strict";
 
 var promisify = function (func) {
-    if (typeof cbArgNames === "undefined") {
-        cbArgNames = null;
-    }
-
     return function () {
         var self = this;
         var funcArgs = Array.prototype.slice.call(arguments);
