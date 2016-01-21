@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, Shawn Dellysse
+ * Copyright (c) 2015-2016 Shawn Dellysse
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
@@ -15,40 +15,5 @@
 
 "use strict";
 
-if (typeof Promise === "undefined") {
-    throw new Error("Must have a global Promise constructor");
-}
-
-var fs = require("fs");
-var promisfy = require("./promisfy");
-
-var functionNames = [
-    "rename", "chown", "truncate", "ftruncate", "fchown", "lchown", "chmod",
-    "fchmod", "lchmod", "stat", "lstat", "fstat", "link", "symlink", "readlink",
-    "realpath", "unlink", "rmdir", "mkdir", "readdir", "close", "open",
-    "utimes", "futimes", "fsync", "write", "read", "readFile", "writeFile",
-    "appendFile", "access",
-];
-
-var functionNameLookup = {};
-for (var i = 0, l = functionNames.length; i < l; i++) {
-    var functionName = functionNames[i];
-
-    functionNameLookup[functionName] = true;
-}
-
-for (var name in fs) {
-    if (functionNameLookup[name]) {
-        exports[name] = promisfy(fs[name]);
-
-    // exists is a depcreated oddball but it's still there
-    } else if (name === "exists") {
-        exports[name] = new Promise(function (resolve, reject) {
-            return function (pathname) {
-                fs.exists(pathname, resolve);
-            };
-        });
-    } else {
-        exports[name] = fs[name];
-    }
-}
+var promisify = require("./promisify");
+module.exports = promisify(global.Promise, false);
